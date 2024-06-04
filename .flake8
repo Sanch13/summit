@@ -5,7 +5,7 @@ count = True
 show-source = True
 statistics = True
 
-################### FILE PATTERNS ##########################
+########## FILE PATTERNS ##########
 exclude =
     .git,
     __pycache__,
