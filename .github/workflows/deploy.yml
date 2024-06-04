@@ -31,13 +31,15 @@ jobs:
         flake8 .
 
 
-#      - name: Run command on remote server
-#        uses: appleboy/ssh-action@v1.0.0
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          port: ${{ secrets.PORT }}
-#          key: ${{ secrets.SSHKEY }}
+    - name: Run command on remote server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.SSHKEY }}
+        script: |
+          echo "hello"
 #          script: |
 #            cd ${{ secrets.PATH_TO_SITE }}
           #            ./${{ secrets.DEPLOY_FILE }}
