@@ -39,7 +39,5 @@ jobs:
         port: ${{ secrets.PORT }}
         key: ${{ secrets.SSHKEY }}
         script: |
-          echo "hello"
-#          script: |
-#            cd ${{ secrets.PATH_TO_SITE }}
-          #            ./${{ secrets.DEPLOY_FILE }}
+          cd ${{ secrets.PATH_TO_WEBSITE }}
+          ./${{ secrets.DEPLOY_FILE }}
