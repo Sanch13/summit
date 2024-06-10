@@ -4,6 +4,7 @@ format = default
 count = True
 show-source = True
 statistics = True
+ignore = F401
 
 ########## FILE PATTERNS ##########
 exclude =
@@ -21,4 +22,4 @@ max-line-length = 100
 max-complexity = 10
 
 per-file-ignores =
-    __init__.py:F401,F403
+    */__init__.py: F401, F403

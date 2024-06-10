@@ -32,6 +32,7 @@ INSTALLED_APPS += [
 # APPS
 INSTALLED_APPS += [
     "api",
+    "users",
 ]
 
 # AFTER APPS
@@ -39,6 +40,10 @@ INSTALLED_APPS += [
     "drf_spectacular",
 ]
 
+# Custom user model
+AUTH_USER_MODEL = 'users.User'
+# Custom backend
+# AUTHENTICATION_BACKENDS = ('users.backends.AuthBackend',)
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -72,15 +77,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': settings.ENGINE,
+    #     'NAME': settings.NAME_DB,
+    #     'USER': settings.USER,
+    #     'PASSWORD': settings.PASSWORD,
+    #     'HOST': settings.HOST,
+    #     'PORT': settings.PORT,
+    # },
+    # 'extra': {
     'default': {
-        'ENGINE': settings.ENGINE,
-        'NAME': settings.NAME_DB,
-        'USER': settings.USER,
-        'PASSWORD': settings.PASSWORD,
-        'HOST': settings.HOST,
-        'PORT': settings.PORT,
-    },
-    'extra': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
@@ -137,7 +143,9 @@ CSRF_COOKIE_SECURE = settings.CSRF_COOKIE_SECURE
 
 # STATIC AND MEDIA
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media/"
 
