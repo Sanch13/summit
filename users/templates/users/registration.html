@@ -129,6 +129,10 @@ $(document).ready(function() {
 
     function checkFullPhone (value) {
         const indexArr = [5, 6, 8, 9, 10, 12, 13, 15, 16]
+        if (typeof value !== 'string') {
+            return false;
+        }
+
         return indexArr.some(index => value.charAt(index) === '_');
     }
 
@@ -137,21 +141,26 @@ $(document).ready(function() {
 
         // Получаем значения всех полей формы
         const phoneNumber = document.getElementById('id_phone_number').getAttribute('class').split(' ').includes('is-valid');
+        const phoneVal = document.getElementById('id_phone_number').value || '+375(__)___-__-__';
         // Добавьте здесь получение значений других полей формы
-        console.log(phoneNumber)
+        console.log('phoneNumber', phoneNumber);
+        console.log('phoneVal', phoneVal);
 
         // Проверяем все поля на заполнение
-        if (checkFullPhone(phoneNumber)) {
+        if (checkFullPhone(phoneVal)) {
+            $('#id_phone_number').inputmask({
+                "mask": "+375(99)999-99-99",
+                "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
+            });
             document.getElementById('id_phone_number').classList.add('is-invalid');
             document.getElementById('phone-error').style.display = 'block';
-            console.log(checkFullPhone(phoneNumber))
             return; // Прекращаем выполнение кода, если хотя бы одно поле не заполнено
         }
         // Добавьте здесь проверки других полей формы
         // <input type="tel" name="phone_number" id="id_phone_number" class="form-control is-invalid" required="" inputmode="text" autocorrect="off">
 
         // Если все поля заполнены, отправляем форму на сервер
-        this.submit();
+        {#this.submit();#}
     });
 
 });
