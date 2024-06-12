@@ -18,7 +18,7 @@
             <form method="post" action="{% url 'users:registration' %}" id="reg-form">
                 {% csrf_token %}
 
-                <div class="mb-3">
+                <div class="position-relative">
                     <label for="id_email" class="form-label">Email</label>
                     <input type="email"
                            name="email"
@@ -26,9 +26,12 @@
                            class="form-control"
                            placeholder="Электронная почта"
                            required>
+                    <div id="id_email-error" class="error-message">
+                        Введите корректный адрес электронной почты
+                    </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="position-relative">
                     <label for="id_password1" class="form-label">Пароль</label>
                     <input type="password"
                            name="password1"
@@ -36,9 +39,12 @@
                            class="form-control"
                            placeholder="Пароль"
                            required>
+                    <div id="id_password1-error" class="error-message">
+                        Введенный пароль должен быть не менее 8 символов
+                    </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="position-relative">
                     <label for="id_password2" class="form-label">Подтвердите пароль</label>
                     <input type="password"
                            name="password2"
@@ -46,10 +52,12 @@
                            class="form-control"
                            placeholder="Подтвердите пароль"
                            required>
-
+                    <div id="id_password2-error" class="error-message">
+                        Введенный пароль должен быть не менее 8 символов
+                    </div>
                 </div>
 
-                <div class="mb-3 position-relative">
+                <div class="position-relative">
                     <label for="id_phone_number" class="form-label">Телефон</label>
                     <input type="tel"
                            name="phone_number"
@@ -62,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3 position-relative">
+                <div class="position-relative">
                     <label for="id_first_name" class="form-label">Имя</label>
                     <input type="text"
                            name="first_name"
@@ -75,7 +83,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3 position-relative">
+                <div class="position-relative">
                     <label for="id_last_name" class="form-label">Фамилия</label>
                     <input type="text"
                            name="last_name"
@@ -104,68 +112,73 @@
     </div>
 </div>
 
+
 <script>
-$(document).ready(function() {
-    $('#id_phone_number').inputmask({
-        "mask": "+375(99)999-99-99",
-        "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
-    });
 
-    const phoneInput = document.getElementById('id_phone_number');
+</script>>
 
-    phoneInput.addEventListener('blur', function () {
-        const value = phoneInput.value || '+375(__)___-__-__'
-        console.log(value)
 
-        if (checkFullPhone(value)) {
-            document.getElementById('id_phone_number').classList.add('is-invalid');
-            document.getElementById('phone-error').style.display = 'block';
-        } else {
-            document.getElementById('id_phone_number').classList.remove('is-invalid');
-            document.getElementById('phone-error').style.display = 'none';
-            document.getElementById('id_phone_number').classList.add('is-valid');
-        }
 
-    });
+<!--<script>-->
+<!--$(document).ready(function() {-->
+<!--    $('#id_phone_number').inputmask({-->
+<!--        "mask": "+375(99)999-99-99",-->
+<!--        "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус-->
+<!--    });-->
 
-    function checkFullPhone (value) {
-        const indexArr = [5, 6, 8, 9, 10, 12, 13, 15, 16]
-        if (typeof value !== 'string') {
-            return false;
-        }
+<!--    const phoneInput = document.getElementById('id_phone_number');-->
 
-        return indexArr.some(index => value.charAt(index) === '_');
-    }
+<!--    phoneInput.addEventListener('blur', function () {-->
+<!--        const value = phoneInput.value || '+375(__)___-__-__'-->
+<!--        console.log(value)-->
 
-    $('#reg-form').submit(function(event) {
-        event.preventDefault();
+<!--        if (checkFullPhone(value)) {-->
+<!--            document.getElementById('id_phone_number').classList.add('is-invalid');-->
+<!--            document.getElementById('phone-error').style.display = 'block';-->
+<!--        } else {-->
+<!--            document.getElementById('id_phone_number').classList.remove('is-invalid');-->
+<!--            document.getElementById('phone-error').style.display = 'none';-->
+<!--            document.getElementById('id_phone_number').classList.add('is-valid');-->
+<!--        }-->
 
-        // Получаем значения всех полей формы
-        const phoneNumber = document.getElementById('id_phone_number').getAttribute('class').split(' ').includes('is-valid');
-        const phoneVal = document.getElementById('id_phone_number').value || '+375(__)___-__-__';
-        // Добавьте здесь получение значений других полей формы
-        console.log('phoneNumber', phoneNumber);
-        console.log('phoneVal', phoneVal);
+<!--    });-->
 
-        // Проверяем все поля на заполнение
-        if (checkFullPhone(phoneVal)) {
-            $('#id_phone_number').inputmask({
-                "mask": "+375(99)999-99-99",
-                "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
-            });
-            document.getElementById('id_phone_number').classList.add('is-invalid');
-            document.getElementById('phone-error').style.display = 'block';
-            return; // Прекращаем выполнение кода, если хотя бы одно поле не заполнено
-        }
-        // Добавьте здесь проверки других полей формы
-        // <input type="tel" name="phone_number" id="id_phone_number" class="form-control is-invalid" required="" inputmode="text" autocorrect="off">
+<!--    function checkFullPhone (value) {-->
+<!--        const indexArr = [5, 6, 8, 9, 10, 12, 13, 15, 16]-->
+<!--        if (typeof value !== 'string') {-->
+<!--            return false;-->
+<!--        }-->
 
-        // Если все поля заполнены, отправляем форму на сервер
-        {#this.submit();#}
-    });
+<!--        return indexArr.some(index => value.charAt(index) === '_');-->
+<!--    }-->
 
-});
-</script>
+<!--    $('#reg-form').submit(function(event) {-->
+<!--        event.preventDefault();-->
 
+<!--        // Получаем значения всех полей формы-->
+<!--        const phoneNumber = document.getElementById('id_phone_number').getAttribute('class').split(' ').includes('is-valid');-->
+<!--        const phoneVal = document.getElementById('id_phone_number').value || '+375(__)___-__-__';-->
+<!--        // Добавьте здесь получение значений других полей формы-->
+<!--        console.log('phoneNumber', phoneNumber);-->
+<!--        console.log('phoneVal', phoneVal);-->
+
+<!--        // Проверяем все поля на заполнение-->
+<!--        if (checkFullPhone(phoneVal)) {-->
+<!--            $('#id_phone_number').inputmask({-->
+<!--                "mask": "+375(99)999-99-99",-->
+<!--                "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус-->
+<!--            });-->
+<!--            document.getElementById('id_phone_number').classList.add('is-invalid');-->
+<!--            document.getElementById('phone-error').style.display = 'block';-->
+<!--            return; // Прекращаем выполнение кода, если хотя бы одно поле не заполнено-->
+<!--        }-->
+
+<!--        // Если все поля заполнены, отправляем форму на сервер-->
+<!--        // {#this.submit();#}-->
+<!--    });-->
+
+<!--});-->
+<!--</script>-->
+<script type="module" src="{% static 'js/users/handlers_for_fields.js' %}"></script>
 {% endblock content %}
 # qwerty1302
