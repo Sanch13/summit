@@ -10,10 +10,8 @@ from rest_framework.permissions import AllowAny
 @permission_classes([AllowAny])
 def validate_password(request):
     if request.method == 'POST':
-        print("i am working")
-        password = request.POST.get('password')
+        password = request.data.get('password')
         try:
-            print("i am working")
             django_validate_password(password)
             return Response({'valid': True})
         except ValidationError as e:
