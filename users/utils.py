@@ -33,15 +33,32 @@ def validate_password(request):
                         status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([AllowAny])
 def check_email(request):
-    email = request.data.get('email')
+    email = request.query_params.get('email', None)
+    print(email)
     if not email:
         return Response(data={'error': 'Email is required'},
                         status=status.HTTP_400_BAD_REQUEST)
 
     if User.objects.filter(email=email).exists():
+        return Response(data={'valid': False},
+                        status=status.HTTP_200_OK)
+    else:
+        return Response(data={'valid': True},
+                        status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_phone_number(request):
+    phone_number = request.data.get('phone_number')
+    if not phone_number:
+        return Response(data={'error': 'phone_number is required'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(phone_number=phone_number).exists():
         return Response(data={'valid': False},
                         status=status.HTTP_200_OK)
     else:

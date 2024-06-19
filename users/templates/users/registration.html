@@ -64,8 +64,8 @@
                            class="form-control"
                            placeholder="+375(__)___-__-__"
                            required>
-                    <div id="phone-error" class="error-message">
-                        Пожалуйста, введите полный номер телефона.
+                    <div id="id_phone_number-error" class="error-message">
+
                     </div>
                 </div>
 
@@ -116,38 +116,14 @@
 
 
 
-<!--<script>-->
-<!--$(document).ready(function() {-->
-<!--    $('#id_phone_number').inputmask({-->
-<!--        "mask": "+375(99)999-99-99",-->
-<!--        "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус-->
-<!--    });-->
-
-<!--    const phoneInput = document.getElementById('id_phone_number');-->
-
-<!--    phoneInput.addEventListener('blur', function () {-->
-<!--        const value = phoneInput.value || '+375(__)___-__-__'-->
-<!--        console.log(value)-->
-
-<!--        if (checkFullPhone(value)) {-->
-<!--            document.getElementById('id_phone_number').classList.add('is-invalid');-->
-<!--            document.getElementById('phone-error').style.display = 'block';-->
-<!--        } else {-->
-<!--            document.getElementById('id_phone_number').classList.remove('is-invalid');-->
-<!--            document.getElementById('phone-error').style.display = 'none';-->
-<!--            document.getElementById('id_phone_number').classList.add('is-valid');-->
-<!--        }-->
-
-<!--    });-->
-
-<!--    function checkFullPhone (value) {-->
-<!--        const indexArr = [5, 6, 8, 9, 10, 12, 13, 15, 16]-->
-<!--        if (typeof value !== 'string') {-->
-<!--            return false;-->
-<!--        }-->
-
-<!--        return indexArr.some(index => value.charAt(index) === '_');-->
-<!--    }-->
+<script>
+$(document).ready(function() {
+    $('#id_phone_number').inputmask({
+        "mask": "+375(99)999-99-99",
+        "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
+    });
+});
+</script>
 
 <!--    $('#reg-form').submit(function(event) {-->
 <!--        event.preventDefault();-->
@@ -172,10 +148,7 @@
 
 <!--        // Если все поля заполнены, отправляем форму на сервер-->
 <!--        // {#this.submit();#}-->
-<!--    });-->
 
-<!--});-->
-<!--</script>-->
 <script type="module" src="{% static 'js/users/handlers_for_fields.js' %}"></script>
 {% endblock content %}
-# qwerty1302
+#
