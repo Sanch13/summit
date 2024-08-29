@@ -23,7 +23,7 @@
                     <input type="email"
                            name="email"
                            id="id_email"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="Электронная почта"
                            required>
                     <div id="id_email-error" class="error-message">
@@ -36,9 +36,12 @@
                     <input type="password"
                            name="password1"
                            id="id_password1"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="Пароль"
                            required>
+                    <span class="password-toggle" onclick="togglePasswordVisibility1()">
+                        <i id="eyeIcon1" class="bi bi-eye-slash"></i>
+                    </span>
                     <div id="id_password1-error" class="error-message">
 
                     </div>
@@ -49,9 +52,12 @@
                     <input type="password"
                            name="password2"
                            id="id_password2"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="Подтвердите пароль"
                            required>
+                    <span class="password-toggle" onclick="togglePasswordVisibility2()">
+                        <i id="eyeIcon2" class="bi bi-eye-slash"></i>
+                    </span>
                     <div id="id_password2-error" class="error-message">
                     </div>
                 </div>
@@ -61,7 +67,7 @@
                     <input type="tel"
                            name="phone_number"
                            id="id_phone_number"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="+375(__)___-__-__"
                            required>
                     <div id="id_phone_number-error" class="error-message">
@@ -74,10 +80,10 @@
                     <input type="text"
                            name="first_name"
                            id="id_first_name"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="Имя"
                            required>
-                    <div class="error-message">
+                    <div id="id_first_name-error" class="error-message">
                     </div>
                 </div>
 
@@ -86,10 +92,10 @@
                     <input type="text"
                            name="last_name"
                            id="id_last_name"
-                           class="form-control"
+                           class="form-control my-form"
                            placeholder="Фамилия"
                            required>
-                    <div class="error-message">
+                    <div id="id_last_name-error" class="error-message">
                     </div>
                 </div>
 
@@ -101,20 +107,14 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary" id="send-data">Зарегистрироваться
+                    <button type="submit" class="btn btn-primary" id="btn-send-data"
+                            disabled>Зарегистрироваться
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-
-<script>
-
-</script>>
-
-
 
 <script>
 $(document).ready(function() {
@@ -123,32 +123,68 @@ $(document).ready(function() {
         "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
     });
 });
+
 </script>
 
-<!--    $('#reg-form').submit(function(event) {-->
-<!--        event.preventDefault();-->
 
-<!--        // Получаем значения всех полей формы-->
-<!--        const phoneNumber = document.getElementById('id_phone_number').getAttribute('class').split(' ').includes('is-valid');-->
-<!--        const phoneVal = document.getElementById('id_phone_number').value || '+375(__)___-__-__';-->
-<!--        // Добавьте здесь получение значений других полей формы-->
-<!--        console.log('phoneNumber', phoneNumber);-->
-<!--        console.log('phoneVal', phoneVal);-->
 
-<!--        // Проверяем все поля на заполнение-->
-<!--        if (checkFullPhone(phoneVal)) {-->
-<!--            $('#id_phone_number').inputmask({-->
-<!--                "mask": "+375(99)999-99-99",-->
-<!--                "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус-->
-<!--            });-->
-<!--            document.getElementById('id_phone_number').classList.add('is-invalid');-->
-<!--            document.getElementById('phone-error').style.display = 'block';-->
-<!--            return; // Прекращаем выполнение кода, если хотя бы одно поле не заполнено-->
-<!--        }-->
 
-<!--        // Если все поля заполнены, отправляем форму на сервер-->
-<!--        // {#this.submit();#}-->
+<script>
+    function checkAllFieldsValid() {
+        const inputs = document.querySelectorAll('.form-control');
+        const checkbox = document.getElementById('checkboxAgree');
+        const submitButton = document.getElementById('btn-send-data')
+        let allValid = true;
+
+        inputs.forEach(input => {
+            if (!input.classList.contains('is-valid')) {
+                allValid = false;
+            }
+        });
+
+        if (!allValid) {
+            checkbox.checked = false;
+        } else {
+            if (checkbox.checked) {
+                submitButton.removeAttribute('disabled');
+            } else {
+                submitButton.setAttribute('disabled', 'disabled');
+            }
+        }
+    }
+
+document.getElementById('checkboxAgree').addEventListener('click', checkAllFieldsValid);
+
+function togglePasswordVisibility1() {
+    const eyeIcon = document.getElementById('eyeIcon1');
+    const passwordInput = document.getElementById('id_password1');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('bi-eye-slash');
+        eyeIcon.classList.add('bi-eye');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('bi-eye');
+        eyeIcon.classList.add('bi-eye-slash');
+    }
+}
+
+function togglePasswordVisibility2() {
+    const eyeIcon = document.getElementById('eyeIcon2');
+    const passwordInput = document.getElementById('id_password2');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('bi-eye-slash');
+        eyeIcon.classList.add('bi-eye');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('bi-eye');
+        eyeIcon.classList.add('bi-eye-slash');
+    }
+}
+</script>
 
 <script type="module" src="{% static 'js/users/handlers_for_fields.js' %}"></script>
 {% endblock content %}
-#

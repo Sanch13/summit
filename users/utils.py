@@ -37,7 +37,6 @@ def validate_password(request):
 @permission_classes([AllowAny])
 def check_email(request):
     email = request.query_params.get('email', None)
-    print(email)
     if not email:
         return Response(data={'error': 'Email is required'},
                         status=status.HTTP_400_BAD_REQUEST)
@@ -53,7 +52,7 @@ def check_email(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def check_phone_number(request):
-    phone_number = request.data.get('phone_number')
+    phone_number = request.query_params.get('phone_number')
     if not phone_number:
         return Response(data={'error': 'phone_number is required'},
                         status=status.HTTP_400_BAD_REQUEST)

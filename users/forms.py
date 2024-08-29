@@ -7,11 +7,8 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            # "username",
             "email",
-            "password1",
-            "password2",
             "phone_number",
-            # "first_name",
-            # "last_name",
+            "first_name",
+            "last_name",
         )

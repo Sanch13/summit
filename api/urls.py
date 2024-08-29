@@ -7,9 +7,9 @@ app_name = 'api'
 
 urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
-    path('check_pswd/', validate_password),
-    path('check_email/', check_email),
-    path('check_phone/', check_phone_number),
+    path('check-password/', validate_password),
+    path('check-email', check_email),
+    path('check_phone', check_phone_number),
 
 ]
 
