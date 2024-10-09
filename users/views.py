@@ -28,7 +28,7 @@ def registration(request):
                 print(f"Ошибка в поле {field}: {errors}")
             return render(
                 request=request,
-                template_name="users/registration.html",
+                template_name="users/registration_old.html",
                 context={"form": UserRegistrationForm()}
             )
 

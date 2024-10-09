@@ -6,63 +6,61 @@
 {% endblock title %}
 
 {% block css %}
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+
 {% endblock css %}
 
 {% block content %}
-<div class="container center-content">
-    <div class="card shadow-lg w-100" style="max-width: 400px;">
-        <div class="card-body">
-            <h2 class="card-title text-center mb-4">Регистрация</h2>
 
-            <form method="post" action="{% url 'users:registration' %}" id="reg-form">
+<div class="my-container">
+    <div class="reg-card">
+        <h2 class="mb-20">Регистрация</h2>
+        <form method="post"
+              class="reg-form"
+              action="{% url 'users:registration' %}"
+              id="reg-form">
                 {% csrf_token %}
 
-                <div class="position-relative">
-                    <label for="id_email" class="form-label">Email</label>
-                    <input type="email"
-                           name="email"
-                           id="id_email"
-                           class="form-control my-form"
-                           placeholder="Электронная почта"
-                           required>
-                    <div id="id_email-error" class="error-message">
+            <div class="reg-block">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email"
+                       name="email"
+                       id="id_email"
+                       class="form-control my-form"
+                       placeholder="Электронная почта"
+                       required>
+                <div id="id_email-error" class="error-message">error</div>
+            </div>
 
-                    </div>
+            <div class="reg-block">
+                <label for="id_password1" class="form-label">Пароль</label>
+                <input type="password"
+                       name="password1"
+                       id="id_password1"
+                       class="form-control my-form"
+                       placeholder="Пароль"
+                       required>
+                <span class="password-toggle" onclick="togglePasswordVisibility1()">
+                    <i id="eyeIcon1" class="bi bi-eye-slash"></i>
+                </span>
+                <div id="id_password1-error" class="error-message"></div>
+            </div>
+
+            <div class="reg-block">
+                <label for="id_password2" class="form-label">Подтвердите пароль</label>
+                <input type="password"
+                       name="password2"
+                       id="id_password2"
+                       class="form-control my-form"
+                       placeholder="Подтвердите пароль"
+                       required>
+                <span class="password-toggle" onclick="togglePasswordVisibility2()">
+                    <i id="eyeIcon2" class="bi bi-eye-slash"></i>
+                </span>
+                <div id="id_password2-error" class="error-message">
                 </div>
+            </div>
 
-                <div class="position-relative">
-                    <label for="id_password1" class="form-label">Пароль</label>
-                    <input type="password"
-                           name="password1"
-                           id="id_password1"
-                           class="form-control my-form"
-                           placeholder="Пароль"
-                           required>
-                    <span class="password-toggle" onclick="togglePasswordVisibility1()">
-                        <i id="eyeIcon1" class="bi bi-eye-slash"></i>
-                    </span>
-                    <div id="id_password1-error" class="error-message">
-
-                    </div>
-                </div>
-
-                <div class="position-relative">
-                    <label for="id_password2" class="form-label">Подтвердите пароль</label>
-                    <input type="password"
-                           name="password2"
-                           id="id_password2"
-                           class="form-control my-form"
-                           placeholder="Подтвердите пароль"
-                           required>
-                    <span class="password-toggle" onclick="togglePasswordVisibility2()">
-                        <i id="eyeIcon2" class="bi bi-eye-slash"></i>
-                    </span>
-                    <div id="id_password2-error" class="error-message">
-                    </div>
-                </div>
-
-                <div class="position-relative">
+                <div class="reg-block">
                     <label for="id_phone_number" class="form-label">Телефон</label>
                     <input type="tel"
                            name="phone_number"
@@ -70,49 +68,10 @@
                            class="form-control my-form"
                            placeholder="+375(__)___-__-__"
                            required>
-                    <div id="id_phone_number-error" class="error-message">
-
-                    </div>
+                    <div id="id_phone_number-error" class="error-message"></div>
                 </div>
 
-                <div class="position-relative">
-                    <label for="id_first_name" class="form-label">Имя</label>
-                    <input type="text"
-                           name="first_name"
-                           id="id_first_name"
-                           class="form-control my-form"
-                           placeholder="Имя"
-                           required>
-                    <div id="id_first_name-error" class="error-message">
-                    </div>
-                </div>
-
-                <div class="position-relative">
-                    <label for="id_last_name" class="form-label">Фамилия</label>
-                    <input type="text"
-                           name="last_name"
-                           id="id_last_name"
-                           class="form-control my-form"
-                           placeholder="Фамилия"
-                           required>
-                    <div id="id_last_name-error" class="error-message">
-                    </div>
-                </div>
-
-                <div class="mb-1 form-check">
-                    <input class="form-check-input" type="checkbox" id="checkboxAgree">
-                    <label class="form-check-label" for="checkboxAgree">
-                        Я согласен на обработку моих персональных данных
-                    </label>
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary" id="btn-send-data"
-                            disabled>Зарегистрироваться
-                    </button>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -123,11 +82,7 @@ $(document).ready(function() {
         "clearMaskOnLostFocus": false, //  Маска остаётся видимой, когда поле теряет фокус
     });
 });
-
 </script>
-
-
-
 
 <script>
     function checkAllFieldsValid() {
