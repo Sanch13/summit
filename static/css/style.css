@@ -77,9 +77,9 @@ body, html {
 }
 
 
-/***************
+/*********************************************
 REGISTRATION FORM
-***************/
+*********************************************/
 
 .reg-form {
     width: 85%;
@@ -126,6 +126,7 @@ REGISTRATION FORM
 .form-control:focus{
     border-color: #1A01CC;
     caret-color: #1A01CC;
+    transition: 0.3s;
 }
 
 .form-control:active{
@@ -146,10 +147,32 @@ REGISTRATION FORM
 
 .invalid {
     border: 1px solid red;
-    transition: 0.1s;
+    transition: 0.3s;
 }
 
 .valid {
     border: 1px solid rgba(75, 177, 0, .85);
-    transition: 0.1s;
+    transition: 0.3s;
 }
+
+.reg-form-checkmark-field {
+    position: absolute;
+    /*margin: 3px;*/
+    left: 100%;
+    top: 65%;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    transform: translateY(-50%);
+}
+
+.checkmark {
+    opacity: 0; /* Исходная прозрачность */
+    transition: opacity 0.3s ease-in-out; /* Плавная анимация */    /*stroke: #4CAF50; !* Цвет контура *!*/
+}
+
+/* Стили для галочки */
+.checkmark.visible {
+    opacity: 1; /* Конечная прозрачность */
+}
+

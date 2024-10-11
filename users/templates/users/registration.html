@@ -20,6 +20,7 @@
               id="reg-form">
                 {% csrf_token %}
 
+            {# Email #}
             <div class="reg-block-input">
                 <label for="id_email" class="form-label">Email</label>
                 <input type="email"
@@ -28,9 +29,22 @@
                        class="form-control"
                        placeholder="Электронная почта"
                        required>
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                         color="green"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                </svg></div>
+
                 <div id="id_email-error" class="error-message"></div>
             </div>
 
+            {# Password 1 #}
             <div class="reg-block-input">
                 <label for="id_password1" class="form-label">Пароль</label>
                 <input type="password"
@@ -39,10 +53,25 @@
                        class="form-control"
                        placeholder="Пароль"
                        required>
+
                 <span class="eye close" onclick="togglePassword(this)"></span>
                 <div id="id_password1-error" class="error-message"></div>
+
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                         color="green"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
+                </div>
             </div>
 
+            {# Password 2 #}
             <div class="reg-block-input">
                 <label for="id_password2" class="form-label">Подтвердите пароль</label>
                 <input type="password"
@@ -53,31 +82,58 @@
                        required>
                 <span class="eye close" onclick="togglePassword(this)"></span>
                 <div id="id_password2-error" class="error-message"></div>
+
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                         color="green"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
+                </div>
             </div>
 
-                <div class="reg-block-input">
-                    <label for="id_phone_number" class="form-label">Телефон</label>
-                    <input type="tel"
-                           name="phone_number"
-                           id="id_phone_number"
-                           class="form-control"
-                           placeholder="+375(__)___-__-__"
-                           required>
-                    <div id="id_phone_number-error" class="error-message"></div>
-                </div>
+            {# Phone number #}
+            <div class="reg-block-input">
+                <label for="id_phone_number" class="form-label">Телефон</label>
+                <input type="tel"
+                       name="phone_number"
+                       id="id_phone_number"
+                       class="form-control"
+                       placeholder="+375(__)___-__-__"
+                       required>
+                <div id="id_phone_number-error" class="error-message"></div>
 
-                <div class="" style="margin-top: 30px;">
-                    <input class="form-check-input" type="checkbox" id="checkboxAgree">
-                    <label class="form-check-label" for="checkboxAgree">
-                        Я согласен на обработку моих персональных данных
-                    </label>
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                         color="green"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
                 </div>
+            </div>
 
-                <div class="d-grid">
-                    <button type="submit" class="btn-reg-user-form" id="btn-send-data"
-                            disabled>Зарегистрироваться
-                    </button>
-                </div>
+            <div class="" style="margin-top: 30px;">
+                <input class="form-check-input" type="checkbox" id="checkboxAgree">
+                <label class="form-check-label" for="checkboxAgree">
+                    Я согласен на обработку моих персональных данных
+                </label>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn-reg-user-form" id="btn-send-data"
+                        disabled>Зарегистрироваться
+                </button>
+            </div>
 
         </form>
     </div>
