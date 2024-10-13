@@ -1,20 +1,18 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 from users.managers import CustomUserManager
 
 
 class User(AbstractUser):
-    email = models.EmailField(verbose_name='Электронная почта',
+    email = models.EmailField(max_length=150,
+                              verbose_name='Электронная почта',
                               unique=True)
-    # phone_number = PhoneNumberField(verbose_name='Телефон',
-    #                                 unique=True)
     phone_number = models.CharField(max_length=17,
                                     verbose_name='Телефон',
                                     unique=True)
     # USERNAME_FIELD = ('email', 'phone_number')
-    # REQUIRED_FIELDS = ('email',)
+    # REQUIRED_FIELDS = ('email', 'phone_number')
 
     objects = CustomUserManager()
 

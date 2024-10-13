@@ -17,10 +17,12 @@
         <form method="post"
               class="reg-form"
               action="{% url 'users:registration' %}"
-              id="reg-form">
+              id="formRegUser"
+              novalidate
+        >
                 {% csrf_token %}
 
-            {# Email #}
+<!----------------  Email ---------------->
             <div class="reg-block-input">
                 <label for="id_email" class="form-label">Email</label>
                 <input type="email"
@@ -36,7 +38,6 @@
                          fill="currentColor"
                          class="checkmark"
                          viewBox="0 0 16 16"
-                         color="green"
                     >
                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                 </svg></div>
@@ -44,7 +45,7 @@
                 <div id="id_email-error" class="error-message"></div>
             </div>
 
-            {# Password 1 #}
+<!----------------  Password 1 ---------------->
             <div class="reg-block-input">
                 <label for="id_password1" class="form-label">Пароль</label>
                 <input type="password"
@@ -64,14 +65,13 @@
                          fill="currentColor"
                          class="checkmark"
                          viewBox="0 0 16 16"
-                         color="green"
                     >
                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                     </svg>
                 </div>
             </div>
 
-            {# Password 2 #}
+<!----------------  Password 2 ---------------->
             <div class="reg-block-input">
                 <label for="id_password2" class="form-label">Подтвердите пароль</label>
                 <input type="password"
@@ -90,14 +90,13 @@
                          fill="currentColor"
                          class="checkmark"
                          viewBox="0 0 16 16"
-                         color="green"
                     >
                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                     </svg>
                 </div>
             </div>
 
-            {# Phone number #}
+<!----------------  Phone number ---------------->
             <div class="reg-block-input">
                 <label for="id_phone_number" class="form-label">Телефон</label>
                 <input type="tel"
@@ -115,22 +114,21 @@
                          fill="currentColor"
                          class="checkmark"
                          viewBox="0 0 16 16"
-                         color="green"
                     >
                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                     </svg>
                 </div>
             </div>
 
-            <div class="" style="margin-top: 30px;">
-                <input class="form-check-input" type="checkbox" id="checkboxAgree">
-                <label class="form-check-label" for="checkboxAgree">
+            <div class="reg-block-input">
+                <input class="form-reg-user" type="checkbox" id="checkboxFormRegUser">
+                <label class="form-reg-user" for="checkboxFormRegUser">
                     Я согласен на обработку моих персональных данных
                 </label>
             </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn-reg-user-form" id="btn-send-data"
+            <div class="reg-block-button">
+                <button type="submit" class="btn-reg-user-form" id="btnFormRegUser"
                         disabled>Зарегистрироваться
                 </button>
             </div>
@@ -149,60 +147,50 @@ const formRegUserData = {
     phoneNumber: document.getElementById('id_phone_number')
 }
 
-function togglePassword(element) {
-    const passwordInputField = element.previousElementSibling;
-    const isPasswordType = passwordInputField.getAttribute('type') === 'password';
-    passwordInputField.setAttribute('type', isPasswordType ? 'text' : 'password')
-
-    if (isPasswordType) {
-        element.classList.remove('close');
-        element.classList.add('open')
-    } else {
-        element.classList.remove('open');
-        element.classList.add('close');
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function (){
-    formRegUserData.email.addEventListener('blur', () => handleEmailBlur(formRegUserData.email));
-    formRegUserData.password1.addEventListener('blur', () => handlePassword1Blur(formRegUserData.password1, formRegUserData.password2));
-    formRegUserData.password2.addEventListener('blur', () => handlePassword2Blur(formRegUserData.password1, formRegUserData.password2));
-    formRegUserData.phoneNumber.addEventListener('blur', () => handlePhoneNumberBlur(formRegUserData.phoneNumber))
+    formRegUserData.email.addEventListener('blur', () => handleEmailBlur(formRegUserData));
+    formRegUserData.password1.addEventListener('blur', () => handlePassword1Blur(formRegUserData));
+    formRegUserData.password2.addEventListener('blur', () => handlePassword2Blur(formRegUserData));
+    formRegUserData.phoneNumber.addEventListener('blur', () => handlePhoneNumberBlur(formRegUserData));
+
+    const checkboxFormRegUser = document.getElementById('checkboxFormRegUser');
+    const btnFormRegUser = document.getElementById('btnFormRegUser');
+
+    checkboxFormRegUser.addEventListener('change', function () {
+        btnFormRegUser.disabled = !checkboxFormRegUser.checked;
+    });
 });
 
 
+document.getElementById('formRegUser').addEventListener('submit', function (event) {
+        event.preventDefault();
 
+        let flag = checkFields(formRegUserData);
 
+        console.log("Sent   flag:", flag);
 
-function checkAllFieldsValid() {
-        const inputs = document.querySelectorAll('.form-control');
-        const checkbox = document.getElementById('checkboxAgree');
-        const submitButton = document.getElementById('btn-send-data')
-        let allValid = true;
+        if (flag) {
+            const formData = {
+                email: formRegUserData.email.value,
+                password: formRegUserData.password2.value,
+                phone_number: formRegUserData.phoneNumber.value
+            };
+            console.log("formData:", formData);
 
-        inputs.forEach(input => {
-            if (!input.classList.contains('is-valid')) {
-                allValid = false;
-            }
-        });
-
-        if (!allValid) {
-            checkbox.checked = false;
-        } else {
-            if (checkbox.checked) {
-                submitButton.removeAttribute('disabled');
-            } else {
-                submitButton.setAttribute('disabled', 'disabled');
-            }
+            axios.post('/users/registration/', formData)
+                .then(response => {
+                    console.log('Success:', response.data);
+                    this.reset();
+                    window.location.href = '/users/profile/';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+            });
         }
-    }
-
-document.getElementById('checkboxAgree').addEventListener('click', checkAllFieldsValid);
-
-
+    });
 </script>
 
-
+<!---------------- Phone Mask ---------------->
 <script>
 $(document).ready(function() {
     $('#id_phone_number').inputmask({

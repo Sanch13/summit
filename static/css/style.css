@@ -167,6 +167,7 @@ REGISTRATION FORM
 }
 
 .checkmark {
+    color: #4bb100d9;
     opacity: 0; /* Исходная прозрачность */
     transition: opacity 0.3s ease-in-out; /* Плавная анимация */    /*stroke: #4CAF50; !* Цвет контура *!*/
 }
@@ -175,4 +176,3 @@ REGISTRATION FORM
 .checkmark.visible {
     opacity: 1; /* Конечная прозрачность */
 }
-
