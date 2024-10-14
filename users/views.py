@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse, redirect
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
@@ -57,10 +57,15 @@ class UserRegistrationView(APIView):
 
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
-        print(serializer)
-        print(serializer.is_valid())
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            # Выполняем аутентификацию пользователя
+            # user = authenticate(username=user.username, password=request.data.get('password'))
+
+            if user is not None:
+                # Если аутентификация прошла успешно, войдите в систему
+                login(request, user)
+
             return Response(data={"message": "User registered successfully."},
                             status=status.HTTP_201_CREATED)
 

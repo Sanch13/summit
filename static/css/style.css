@@ -27,6 +27,20 @@ body, html {
     overflow-x: hidden;
 }
 
+header, footer {
+    height: 80px;
+    background-color: #ddecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
 .my-container {
     display: flex;
     justify-content: center;
@@ -37,7 +51,7 @@ body, html {
 
 .reg-card {
     width: 30%;
-    height: 50%;
+    height: 60%;
 
     display: flex;
     flex-direction: column; /* Выстраиваем элементы внутри вертикально */
@@ -62,7 +76,7 @@ body, html {
     /* Стили для стандартных смартфонов */
     .reg-card {
         width: 95%;
-        height:70%;
+        height:80%;
         overflow-y: auto;
         font-size: 14px;
     }
@@ -175,4 +189,24 @@ REGISTRATION FORM
 /* Стили для галочки */
 .checkmark.visible {
     opacity: 1; /* Конечная прозрачность */
+}
+
+
+.profile-container {
+    margin: 0 auto;
+    width: 1000px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.profile-block-user{
+    border: 1px solid yellowgreen;
+    width: 1000px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }

@@ -10,6 +10,8 @@ class User(AbstractUser):
                               unique=True)
     phone_number = models.CharField(max_length=17,
                                     verbose_name='Телефон',
+                                    blank=True,
+                                    null=True,
                                     unique=True)
     # USERNAME_FIELD = ('email', 'phone_number')
     # REQUIRED_FIELDS = ('email', 'phone_number')

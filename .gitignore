@@ -170,3 +170,5 @@ media/
 */media/
 
 */migrations/
+
+*.sqlite3

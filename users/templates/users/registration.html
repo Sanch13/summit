@@ -119,6 +119,52 @@
                     </svg>
                 </div>
             </div>
+<!----------------  First name ---------------->
+            <div class="reg-block-input">
+                <label for="id_first_name" class="form-label">Имя</label>
+                <input type="text"
+                       name="first_name"
+                       id="id_first_name"
+                       class="form-control"
+                       placeholder="Имя"
+                       required>
+                <div id="id_first_name-error" class="error-message"></div>
+
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
+                </div>
+            </div>
+<!----------------  Last name ---------------->
+            <div class="reg-block-input">
+                <label for="id_last_name" class="form-label">Имя</label>
+                <input type="text"
+                       name="last_name"
+                       id="id_last_name"
+                       class="form-control"
+                       placeholder="Фамилия"
+                       required>
+                <div id="id_last_name-error" class="error-message"></div>
+
+                <div class="reg-form-checkmark-field">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="32"
+                         height="32"
+                         fill="currentColor"
+                         class="checkmark"
+                         viewBox="0 0 16 16"
+                    >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
+                </div>
+            </div>
 
             <div class="reg-block-input">
                 <input class="form-reg-user" type="checkbox" id="checkboxFormRegUser">
@@ -144,7 +190,9 @@ const formRegUserData = {
     email: document.getElementById('id_email'),
     password1: document.getElementById('id_password1'),
     password2: document.getElementById('id_password2'),
-    phoneNumber: document.getElementById('id_phone_number')
+    phoneNumber: document.getElementById('id_phone_number'),
+    firstName: document.getElementById('id_first_name'),
+    lastName: document.getElementById('id_last_name')
 }
 
 document.addEventListener('DOMContentLoaded', function (){
@@ -152,6 +200,8 @@ document.addEventListener('DOMContentLoaded', function (){
     formRegUserData.password1.addEventListener('blur', () => handlePassword1Blur(formRegUserData));
     formRegUserData.password2.addEventListener('blur', () => handlePassword2Blur(formRegUserData));
     formRegUserData.phoneNumber.addEventListener('blur', () => handlePhoneNumberBlur(formRegUserData));
+    formRegUserData.firstName.addEventListener('blur', () => handleFirstNameBlur(formRegUserData));
+    formRegUserData.lastName.addEventListener('blur', () => handleLastNameBlur(formRegUserData));
 
     const checkboxFormRegUser = document.getElementById('checkboxFormRegUser');
     const btnFormRegUser = document.getElementById('btnFormRegUser');
@@ -165,28 +215,35 @@ document.addEventListener('DOMContentLoaded', function (){
 document.getElementById('formRegUser').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        let flag = checkFields(formRegUserData);
+        checkFields(formRegUserData).then(flag => {
+            console.log('flag:', typeof flag, flag);
 
-        console.log("Sent   flag:", flag);
+            if (flag) {
+                const formData = {
+                    email: formRegUserData.email.value,
+                    password: formRegUserData.password2.value,
+                    phone_number: formRegUserData.phoneNumber.value,
+                    first_name: formRegUserData.firstName.value,
+                    last_name: formRegUserData.lastName.value
+                };
 
-        if (flag) {
-            const formData = {
-                email: formRegUserData.email.value,
-                password: formRegUserData.password2.value,
-                phone_number: formRegUserData.phoneNumber.value
-            };
-            console.log("formData:", formData);
-
-            axios.post('/users/registration/', formData)
-                .then(response => {
-                    console.log('Success:', response.data);
-                    this.reset();
-                    window.location.href = '/users/profile/';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-            });
-        }
+                axios.post('/users/registration/', formData)
+                    .then(response => {
+                        console.log('Success:', response.data);
+                        this.reset();
+                        const formRegUser = document.getElementById("formRegUser");
+                        clearFormClass(formRegUser);
+                        window.location.href = '/users/profile/';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                console.log('Validation failed, stopping form submission.');
+            }
+        }).catch(error => {
+            console.error('Error during validation:', error);
+        });
     });
 </script>
 

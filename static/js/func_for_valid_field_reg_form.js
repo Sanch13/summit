@@ -16,6 +16,17 @@ function isNumericPassword(value) {
     return /^\d+$/.test(value);
 }
 
+function clearFormClass(form) {
+    const inputsFields = form.querySelectorAll("input");
+    const checkmarks = form.querySelectorAll(".checkmark");
+    inputsFields.forEach(input => {
+       input.classList.remove("valid");
+    });
+    checkmarks.forEach(checkmark => {
+       checkmark.classList.remove("visible");
+    });
+}
+
 function showEmptyFieldError(nameInput, errorElement) {
     nameInput.classList.remove("valid");
     nameInput.classList.add("invalid");
@@ -86,6 +97,35 @@ function togglePassword(element) {
     }
 }
 
+function validSimpleTextFields(nameInput) {
+    const valueField = nameInput.value;
+    const errorElement = document.getElementById(nameInput.id + '-error');
+    const blockCheckmark = nameInput.parentElement.querySelector('.checkmark');
+    let flag = false;
+
+    if (isEmptyField(valueField)) {
+        blockCheckmark.classList.remove('visible');
+        showEmptyFieldError(nameInput, errorElement);
+    } else {
+        nameInput.classList.remove("invalid");
+        nameInput.classList.add("valid");
+        blockCheckmark.classList.add("visible");
+        errorElement.textContent = '';
+        flag = true
+    }
+    return flag
+}
+
+async function handleFirstNameBlur(data) {
+    const nameInput = data.firstName;
+    return validSimpleTextFields(nameInput);
+}
+
+async function handleLastNameBlur(data) {
+    const nameInput = data.lastName;
+    return validSimpleTextFields(nameInput)
+}
+
 async function handleEmailBlur(data) {
     const emailInput = data.email
     const valueField = emailInput.value;
@@ -95,6 +135,7 @@ async function handleEmailBlur(data) {
     let flag = false;
 
     if (isEmptyField(valueField)) {
+        blockCheckmark.classList.remove("visible")
         showEmptyFieldError(emailInput, errorElement);
     } else if (!isValidEmail(valueField)) {
         emailInput.classList.remove("valid");
@@ -287,10 +328,26 @@ async function checkPhoneNumber(valueField) {
     }
 }
 
+// function checkFields(data) {
+//     const flag1 = handleEmailBlur(data)
+//     const flag2 = handlePassword1Blur(data)
+//     const flag3 = handlePassword2Blur(data)
+//     const flag4 = handlePhoneNumberBlur(data)
+//     return flag1 && flag2 && flag3 && flag4;
+// }
+
 function checkFields(data) {
-    const flag1 = handleEmailBlur(data)
-    const flag2 = handlePassword1Blur(data)
-    const flag3 = handlePassword2Blur(data)
-    const flag4 = handlePhoneNumberBlur(data)
-    return flag1 && flag2 && flag3 && flag4;
+    const promises = [
+        handleEmailBlur(data),
+        handlePassword1Blur(data),
+        handlePassword2Blur(data),
+        handlePhoneNumberBlur(data),
+        handleFirstNameBlur(data),
+        handleLastNameBlur(data)
+    ];
+
+    return Promise.all(promises).then(results => {
+        // results будет массивом значений, возвращенных всеми функциями
+        return results.every(flag => flag === true); // Проверяем, все ли флаги истинные
+    });
 }
