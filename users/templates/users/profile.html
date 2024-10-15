@@ -13,7 +13,7 @@
         <div class="profile-block-user" style="margin-top: 50px;">
             <p>User</p>
             {% if user.is_authenticated %}
-                <p>Авторизован как {{ user }}</p>
+                <p>Авторизован {{ user }}</p>
             {% else %}
                 <p>Не авторизован</p>
             {% endif %}

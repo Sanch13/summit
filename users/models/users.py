@@ -27,4 +27,4 @@ class User(AbstractUser):
         return f'{self.first_name} {self.last_name}' or ''
 
     def __str__(self):
-        return f'ID[{self.pk}] - {self.full_name}'
+        return f'{self.full_name} - ID:{self.pk}'

@@ -5,10 +5,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import generics, permissions
+
+from drf_spectacular.utils import extend_schema
 
 from users.forms import UserRegistrationForm
-from users.serializers.serializers import UserRegistrationSerializer
-
+from users.serializers.serializers import UserRegistrationSerializer, UserUpdateSerializer
 
 User = get_user_model()
 
@@ -59,17 +61,41 @@ class UserRegistrationView(APIView):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            # Выполняем аутентификацию пользователя
-            # user = authenticate(username=user.username, password=request.data.get('password'))
 
             if user is not None:
-                # Если аутентификация прошла успешно, войдите в систему
                 login(request, user)
 
             return Response(data={"message": "User registered successfully."},
                             status=status.HTTP_201_CREATED)
 
         return Response(data={"errors": serializer.errors},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserUpdateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """Получаем данные текущего пользователя"""
+        user = request.user
+        print(user)
+        serializer = UserUpdateSerializer(user)
+        return Response(serializer.data)
+
+    @extend_schema(
+        description="Обновление профиля текущего пользователя",
+        request=UserRegistrationSerializer
+    )
+    def put(self, request):
+        """Обновление профиля текущего пользователя"""
+        user = request.user
+        serializer = UserUpdateSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={"message": "Profile updated successfully."},
+                            status=status.HTTP_200_OK)
+        return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
 

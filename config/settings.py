@@ -95,12 +95,12 @@ DATABASES = {
 # DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',  # Разрешить доступ всем пользователям
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.AllowAny',  # Разрешить доступ всем пользователям
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ],
 
     'DEFAULT_PARSER_CLASSES': [
@@ -160,13 +160,12 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 
     'SERVE_PERMISSIONS': [
-        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ],
 
     'SERVE_AUTHENTICATION': [
-        # 'rest_framework.authentication.BasicAuthentication',
-
+        'rest_framework.authentication.BasicAuthentication',
     ],
 
     'SWAGGER_UI_SETTINGS': {
